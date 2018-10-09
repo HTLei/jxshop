@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="{:config('static_admin')}/css/style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript" src="{:config('static_admin')}/js/jquery.js"></script>
+    <style>
+        .active{border-bottom: solid 3px #66c9f3;}
+
+        .box th, .box td{border: 1px solid #ccc;text-align: center;}
+        .box b{color:blue;}
+        li{list-style: none;}
+        .box .ul_f{float:left;margin:13px 13px 0 0;}
+        .box .son{padding-left: 10px; margin:13px 0 13px 20px;}
+
+    </style>
+</head>
+
+<body>
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">表单</a></li>
+        </ul>
+    </div>
+    <div class="formbody">
+        <div class="formtitle">
+            <span class="active">基本信息</span>
+        </div>
+        <form action="" method="post">
+            <ul class="forminfo">
+                <li>
+                    <label>角色名称</label>
+                    <input name="role_name" placeholder="请输入角色名称" type="text" class="dfinput" /><i></i>
+                </li>
+                <li>
+                    分配权限
+                    <table width="600px" border="1px" rules="all" class="box">
+                        <?php foreach($children[0] as $one): ?>
+                        <tr>
+                            <th><input type="checkbox" name="auth_ids_list[]" value="<?php echo $one; ?>" onclick="selectAll(this);"><?php echo $auths[$one]['auth_name'] ?></th>
+                            <td>
+                                <?php foreach($children[$one] as $two): ?>
+                                <ul class="ul_f">
+                                    <b><input type="checkbox" name="auth_ids_list[]" value="<?php echo $two; ?>" onclick="selectAll(this);selectUp(this,'<?php echo $one; ?>');"><?php echo $auths[$two]['auth_name'] ?></b>
+                                    <ul>
+                                        <?php foreach($children[$two] as $three): ?>
+                                        <li class="son"><input type="checkbox" name="auth_ids_list[]" value="<?php echo $three; ?>" onclick="selectUp(this,'<?php echo $one . ',' . $two; ?>');"><?php echo $auths[$three]['auth_name'] ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </ul>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </li>
+            </ul>
+			<li>
+                    <label>&nbsp;</label>
+                    <input name="" id="btnSubmit" type="submit" class="btn" value="确认保存" />
+             </li>
+        </form>
+    </div>
+</body>
+<script>
+    //向下选择
+    function selectAll(ele){
+        $(ele).parent().next().find('input[type="checkbox"]').attr('checked',ele.checked);
+    }
+
+    //向上选择
+    function selectUp(ele,ids){
+        var arr = ids.split(',');
+        for(var i=0;i<arr.length;i++){
+            $("input[type='checkbox'][value=" + arr[i] + "]").attr('checked',true);
+        }
+        var inputLenght = $(ele).parents('tr').children('td').find('input:checked').length;
+        if(inputLenght == 0){
+            $(ele).parents('tr').children('th').find('input').attr('checked',false);
+        }
+    }
+
+</script>
+
+</html>

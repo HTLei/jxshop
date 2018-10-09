@@ -1,0 +1,14 @@
+<ul>
+    <li>您好，<b>{:session('member_username')}</b> 欢迎来到京西！
+        <?php if(session('member_id')): ?>
+        [<a href="{:url('/home/public/logout')}" onclick="return confirm('客官，确定要离开吗？')">退出</a>]
+        <?php else: ?>
+        [<a href="{:url('/home/public/login')}">登录</a>]
+        [<a href="{:url('/home/public/register')}">免费注册</a>]
+        <?php endif; ?>
+    </li>
+    <li class="line">|</li>
+    <li><a href="{:url('/home/order/selfOrder')}">我的订单</a></li>
+    <li class="line">|</li>
+    <li>客户服务</li>
+</ul>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./static/admin/js/jquery.js"></script>
+</head>
+<body>
+
+<input type="button" value="发送短信">
+
+</body>
+<script>
+$('input').click(function(){
+    var input = $(this);
+    var time = 120;
+    down(input,time);
+});
+
+function down(input,time){
+    console.log(input.val());
+    input.val('请' + time-- + '秒后重试').attr('disabled',true);
+    setTimeout(function(){
+
+        if(time == 0){
+            input.val('发送短信');
+            return false;
+        }
+        down(input,time);
+    },1000);
+}
+</script>
+</html>

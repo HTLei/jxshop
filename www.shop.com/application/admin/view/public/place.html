@@ -1,0 +1,13 @@
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="javascript:void(0);">首页</a></li>
+        <?php $break = session('break');foreach($break as $v):?>
+        <?php if($v['pid'] == 0):?>
+        <li><a href="javascript:void(0);"><?php echo $v['auth_name'];?></a></li>
+        <?php else:?>
+        <li><a href="{:url('/admin/' . $v['auth_c'] . '/' . $v['auth_a'],['auth_id'=>$v['auth_id']])}"><?php echo $v['auth_name'];?></a></li>
+        <?php endif;?>
+        <?php endforeach;?>
+    </ul>
+</div>
